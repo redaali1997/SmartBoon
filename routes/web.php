@@ -11,10 +11,17 @@
 |
 */
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+
 Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+Auth::routes(['register' => false]);
 
 Route::get('/home', 'HomeController@index')->name('home');
+// Admin Routes
+Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
+    Route::get('students', 'AdminController@users')->name('admin.users');
+});
