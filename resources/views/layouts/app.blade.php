@@ -39,7 +39,21 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
+                        @auth
+                        <div class="dropdown open">
+                            <button class="btn btn-grey dropdown-toggle" type="button" id="triggerId"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Users
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="triggerId">
+                                <button class="dropdown-item"><a href=" {{ route('admin.students') }}"
+                                        class="btn btn-grey">Students</a></button>
+                                <button class=" dropdown-item"><a href="{{ route('admin.moderators') }}"
+                                        class="btn btn-grey">Moderator</a></button>
+                            </div>
+                        </div>
+                        <a class="nav-link" href="#">Add User</a>
+                        @endauth
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -81,31 +95,32 @@
 
         <main class="py-4">
             <div class="container">
-                @auth
+                @yield('content')
+                {{-- @auth
                 @if (auth()->user()->role === 'admin')
                 <div class="row">
                     <div class="col-md-4">
                         <div class="card">
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item"><a href="{{ route('admin.users') }}">Users</a></li>
-                                <li class="list-group-item">Add User</li>
-                                <li class="list-group-item">Orders</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-md-8">
-                        @yield('content')
-                    </div>
-                </div>
-                @else
-                @yield('content')
-                @endif
-                @endauth
-                @guest
-                @yield('content')
-                @endguest
+                <li class="list-group-item">Add User</li>
+                <li class="list-group-item">Orders</li>
+                </ul>
             </div>
-        </main>
+    </div>
+    <div class="col-md-8">
+        @yield('content')
+    </div>
+    </div>
+    @else
+    @yield('content')
+    @endif
+    @endauth
+    @guest
+    @yield('content')
+    @endguest --}}
+    </div>
+    </main>
     </div>
 </body>
 

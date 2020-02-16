@@ -22,6 +22,13 @@ Auth::routes(['register' => false]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 // Admin Routes
-Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
-    Route::get('students', 'AdminController@users')->name('admin.users');
+Route::prefix('admin')->name('admin.')->middleware(['auth', 'isAdmin'])->group(function () {
+    // Student Routes
+    Route::get('students', 'AdminController@students')->name('students');
+    Route::get('user/{user}/edit', 'AdminController@edit')->name('edit');
+    Route::put('user/{user}', 'AdminController@update')->name('update');
+    Route::delete('user/{user}', 'AdminController@delete')->name('delete');
+
+    // Moderator Routes
+    Route::get('moderators', 'AdminController@moderators')->name('moderators');
 });
