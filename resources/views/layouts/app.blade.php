@@ -52,7 +52,7 @@
                                         class="btn btn-grey">Moderator</a></button>
                             </div>
                         </div>
-                        <a class="nav-link" href="#">Add User</a>
+                        <a class="nav-link" href=" {{ route('admin.add-user') }} ">Add User</a>
                         @endauth
                     </ul>
 

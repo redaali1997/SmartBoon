@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('title', 'Moderators')
 @section('content')
+@include('admin.partials.flash')
 <div class="card">
     <div class="card-body">
         <h4 class="card-title">Moderators</h4>

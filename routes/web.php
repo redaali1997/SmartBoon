@@ -31,4 +31,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'isAdmin'])->group(f
 
     // Moderator Routes
     Route::get('moderators', 'AdminController@moderators')->name('moderators');
+
+    // Add Users Routes
+    Route::get('add-user', 'AdminController@addUser')->name('add-user');
+    Route::post('store-user', 'AdminController@storeUser')->name('store-user');
 });

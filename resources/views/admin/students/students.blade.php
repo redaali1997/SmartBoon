@@ -1,17 +1,26 @@
 @extends('layouts.app')
 @section('title', 'Students')
 @section('content')
+@include('admin.partials.flash')
+<form action="" method="GET">
+    <div class="form-group">
+        <input type="text" class="form-control" name="search" id="" aria-describedby="helpId"
+            placeholder="Search for a student">
+    </div>
+</form>
 <div class="card">
     <div class="card-body">
         <h4 class="card-title">Active Students</h4>
     </div>
     <ul class="list-group">
+        {{ $actives->links() }}
         <table class="table">
             <thead>
                 <tr>
                     <th>Name</th>
                     <th>Email</th>
                     <th>Boon Number</th>
+                    <th>Room Number</th>
                     <th></th>
                 </tr>
             </thead>
@@ -21,6 +30,7 @@
                     <td scope="row"> {{ $active->name }} </td>
                     <td> {{ $active->email }} </td>
                     <td> {{ $active->boon_number }} </td>
+                    <td> {{ $active->room_number }} </td>
                     <td>
                         <a href="{{ route('admin.edit', $active->id) }}" class="btn btn-primary">Edit</a>
                     </td>
@@ -36,12 +46,14 @@
         <h4 class="card-title">Inactive Students</h4>
     </div>
     <ul class="list-group">
+        {{ $inactives->links() }}
         <table class="table">
             <thead>
                 <tr>
                     <th>Name</th>
                     <th>Email</th>
                     <th>Boon Number</th>
+                    <th>Room Number</th>
                     <th></th>
                 </tr>
             </thead>
@@ -51,6 +63,7 @@
                     <td scope="row"> {{ $inactive->name }} </td>
                     <td> {{ $inactive->email }} </td>
                     <td> {{ $inactive->boon_number }} </td>
+                    <td> {{ $inactive->room_number }} </td>
                     <td>
                         <a href=" {{ route('admin.edit', $inactive->id) }} " class="btn btn-primary">Edit</a>
                     </td>

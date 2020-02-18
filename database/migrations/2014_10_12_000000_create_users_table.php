@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->integer('boon_number')->nullable()->unique();
             $table->string('code')->nullable()->unique();
             $table->boolean('activated')->default(false);
+            $table->integer('room_number')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

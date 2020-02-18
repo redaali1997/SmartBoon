@@ -25,8 +25,6 @@ class UsersTableSeeder extends Seeder
             'password' => Hash::make('105090'),
             'role' => 'moderator'
         ]);
-        factory(User::class, 10)->create([
-            'activated' => true
-        ]);
+        factory(User::class, 50)->create();
     }
 }
