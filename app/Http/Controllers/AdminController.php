@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\UsersExport;
 use App\Http\Requests\AddUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Imports\UsersImport;
 use App\User;
 use Illuminate\Http\Request;
 use Faker\Generator as Faker;
@@ -11,6 +13,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Request as FacadesRequest;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AdminController extends Controller
 {
@@ -40,11 +43,20 @@ class AdminController extends Controller
 
     public function update(UpdateUserRequest $request, User $user)
     {
+        // dd($request->all());
+        $activated = null;
+        if ($request->has('activated')) {
+            $activated = 1;
+        } else {
+            $activated = 0;
+        }
+
         $user->update([
             'name' => $request->username,
             'email' => $request->email,
             'boon_number' => $request->boon_number,
-            'room_number' => $request->room_number
+            'room_number' => $request->room_number,
+            'activated' => $activated
         ]);
 
         session()->flash('success', 'The user has been updated.');
@@ -99,5 +111,25 @@ class AdminController extends Controller
         } else {
             return redirect()->route('admin.moderators');
         }
+    }
+
+
+    // Import and Export Users
+    /**
+     * @return \Illuminate\Support\Collection
+     */
+    public function export()
+    {
+        return Excel::download(new UsersExport, 'users.xlsx');
+    }
+
+    /**
+     * @return \Illuminate\Support\Collection
+     */
+    public function import()
+    {
+        Excel::import(new UsersImport, request()->file('file'));
+
+        return back();
     }
 }

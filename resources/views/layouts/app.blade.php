@@ -40,6 +40,7 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                         @auth
+                        @if (auth()->user()->role === 'admin')
                         <div class="dropdown open">
                             <button class="btn btn-grey dropdown-toggle" type="button" id="triggerId"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -53,6 +54,8 @@
                             </div>
                         </div>
                         <a class="nav-link" href=" {{ route('admin.add-user') }} ">Add User</a>
+                        <a class="nav-link" href="#">Orders</a>
+                        @endif
                         @endauth
                     </ul>
 

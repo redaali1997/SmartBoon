@@ -19,7 +19,6 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->enum('role', ['admin', 'moderator', 'student'])->default('student');
             $table->integer('boon_number')->nullable()->unique();
-            $table->string('code')->nullable()->unique();
             $table->boolean('activated')->default(false);
             $table->integer('room_number')->nullable();
             $table->timestamp('email_verified_at')->nullable();

@@ -23,7 +23,6 @@ $factory->define(User::class, function (Faker $faker) {
         'email' => $faker->unique()->safeEmail,
         'email_verified_at' => now(),
         'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-        'code' => Str::random(6),
         'boon_number' => $faker->unique()->numberBetween(1000, 10000),
         'room_number' => $faker->randomDigitNotNull,
         'activated' => $faker->boolean(),

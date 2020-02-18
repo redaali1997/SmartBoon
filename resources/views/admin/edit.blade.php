@@ -34,6 +34,15 @@
                     <label for="name">Room Number:</label>
                     <input type="number" name="room_number" value="{{ $user->room_number }}" class="form-control">
                 </div>
+                <div class="form-group">
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="checkbox" class="form-check-input" name="activated" id="activated"
+                                value="activated" {{ $user->activated === 1 ? 'checked' : '' }}>
+                            Activated
+                        </label>
+                    </div>
+                </div>
                 @endif
                 <button class="btn btn-primary">Update</button>
             </form>

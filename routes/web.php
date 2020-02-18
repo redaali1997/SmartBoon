@@ -35,4 +35,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'isAdmin'])->group(f
     // Add Users Routes
     Route::get('add-user', 'AdminController@addUser')->name('add-user');
     Route::post('store-user', 'AdminController@storeUser')->name('store-user');
+
+    // Import and Export Users
+    Route::get('export', 'AdminController@export')->name('export');
+    Route::post('import', 'AdminController@import')->name('import');
 });

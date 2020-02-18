@@ -9,6 +9,17 @@
     </div>
     <ul class="list-group">
         <li class="list-group-item">
+            <h3>Import from excel</h3>
+            <form action="{{ route('admin.import') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <input type="file" name="file" class="form-control">
+                <br>
+                <button class="btn btn-primary">Import User Data</button>
+                <a class="btn btn-success" href="{{ route('admin.export') }}">Export User Data</a>
+            </form>
+        </li>
+        <li class="list-group-item">
+            <h3>Or enter it manually</h3>
             <form action=" {{ route('admin.store-user') }} " method="post">
                 @csrf
                 <div class="form-group">
