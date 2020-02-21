@@ -20,8 +20,15 @@ class AdminController extends Controller
     // Students
     public function students()
     {
-        $active_students = User::where('activated', true)->where('role', 'student')->paginate(20);
-        $inactive_students = User::where('activated', false)->where('role', 'student')->paginate(20);
+        $search = request()->query('search');
+        if ($search) {
+            $active_students = User::where('boon_number', 'LIKE', "%{$search}%")->where('activated', true)->paginate(20);
+            $inactive_students = User::where('boon_number', 'LIKE', "%{$search}%")->where('activated', false)->paginate(20);
+        } else {
+            $active_students = User::where('activated', true)->where('role', 'student')->paginate(20);
+            $inactive_students = User::where('activated', false)->where('role', 'student')->paginate(20);
+        }
+
         return view('admin.students.students', [
             'actives' => $active_students,
             'inactives' => $inactive_students,

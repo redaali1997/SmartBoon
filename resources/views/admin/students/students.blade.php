@@ -2,10 +2,13 @@
 @section('title', 'Students')
 @section('content')
 @include('admin.partials.flash')
-<form action="" method="GET">
+@if (request()->query('search'))
+<a href=" {{ route('admin.students') }} " class="btn btn-primary">Back To Students</a>
+@endif
+<form action=" {{ route('admin.students') }} " method="GET">
     <div class="form-group">
         <input type="text" class="form-control" name="search" id="" aria-describedby="helpId"
-            placeholder="Search for a student">
+            placeholder="Search for a student by boon number" value="{{ request()->query('search') }}">
     </div>
 </form>
 <div class="card">
