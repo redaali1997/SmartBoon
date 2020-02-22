@@ -22,8 +22,14 @@ Auth::routes(['register' => false]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::resource('/student', 'StudentsController')->middleware('auth', 'isStudent');
+// student routes
+Route::middleware(['auth', 'isStudent'])->group(function(){
+    
+    Route::get('/student', 'StudentsController@index')->name('show');
+    Route::post('/student', 'StudentsController@store')->name('reserve');
+    Route::delete('/student/{order}', 'StudentsController@destroy')->name('delete');
 
+});
 // Admin Routes
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'isAdmin'])->group(function () {
     // Student Routes

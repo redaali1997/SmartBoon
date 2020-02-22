@@ -101,7 +101,9 @@
         </nav>
 
         <main class="py-4">
-            @include('student.inc.messages')
+            <div class="container">
+                @include('student.inc.messages')
+            </div>
             <div class="container">
                 @yield('content')
             </div>

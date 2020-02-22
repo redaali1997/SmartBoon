@@ -14,8 +14,17 @@ class StudentsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        return view('student.create');
+    {   
+        $available = null;
+        $order = auth()->user()->orders()->whereDate('created_at', now()->today()->format('Y-m-d'))->first();
+        if($order) {
+            // return view('student.create');
+            $available = false;
+        } else {
+            // return view('student.cancel');
+            $available = true;
+        }
+        return view('student.student')->with('order', $order)->with('available', $available);
     }
 
     /**
@@ -25,7 +34,7 @@ class StudentsController extends Controller
      */
     public function create()
     {
-        return view('student.create');
+        //
     }
 
     /**
@@ -64,7 +73,7 @@ class StudentsController extends Controller
     
      public function edit($id)
     {
-        
+        //
     }
 
     /**
@@ -85,15 +94,9 @@ class StudentsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Order $order)
     {
-        $user_id = auth()->user()->id;
-        // $order = Order::find($id);
-        if ($order->user_id == $user_id) {
-            $order->delete();
-            return redirect('/student')->with('success', 'Reservation REMOVED');
-        } else {
-            return redirect('/student')->with('error', 'Something went WRONG');
-        }
+        $order->delete();
+        return redirect()->back();
     }
 }
