@@ -42,4 +42,12 @@ class User extends Authenticatable
     {
         return $this->role === 'admin';
     }
+
+    public function isStudent() {
+        return $this->role === 'student';
+    }
+
+    public function orders() {
+        return $this->hasMany('App\Order');
+    }
 }
