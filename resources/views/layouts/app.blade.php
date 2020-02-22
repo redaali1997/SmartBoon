@@ -32,7 +32,9 @@
                     {{ config('app.name', 'SmartBoon') }}
                 </a>
                 @auth
-                    <a href="/student">Students</a>
+                @if (auth()->user()->isStudent())
+                <a href="/student">Reserve</a>
+                @endif
                 @endauth
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
                     data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
