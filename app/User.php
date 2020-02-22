@@ -48,8 +48,11 @@ class User extends Authenticatable
         return $this->role == 'moderator';
     }
 
-    public function orders()
-    {
-        return $this->hasMany(Order::class);
+    public function isStudent() {
+        return $this->role === 'student';
+    }
+
+    public function orders() {
+        return $this->hasMany('App\Order');
     }
 }
