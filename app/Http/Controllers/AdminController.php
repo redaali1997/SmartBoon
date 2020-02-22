@@ -147,7 +147,7 @@ class AdminController extends Controller
     {
         $orders = Order::whereDate('created_at', now()->today()->format('Y-m-d'))->paginate(50);
         $time = ReservingTime::first();
-        return view('admin.orders', [
+        return view('orders', [
             'orders' => $orders,
             'time' => $time
         ]);
@@ -156,16 +156,18 @@ class AdminController extends Controller
     public function timeChanging()
     {
         // dd(request()->all());
-        // ReservingTime::create([
-        //     'start' => request('start'),
-        //     'end' => request('end')
-        // ]);
         $time = ReservingTime::first();
-        $time->update([
-            'start' => request('start'),
-            'end' => request('end')
-        ]);
-
+        if ($time) {
+            $time->update([
+                'start' => request('start'),
+                'end' => request('end')
+            ]);
+        } else {
+            ReservingTime::create([
+                'start' => request('start'),
+                'end' => request('end')
+            ]);
+        }
         return redirect()->back();
     }
 

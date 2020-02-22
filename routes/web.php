@@ -39,9 +39,11 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'isAdmin'])->group(f
     // Import and Export Users
     Route::get('export', 'AdminController@export')->name('export');
     Route::post('import', 'AdminController@import')->name('import');
+});
 
+Route::prefix('orders')->name('orders.')->middleware(['auth', 'isAdminModerator'])->group(function () {
     // Orders Routes
-    Route::get('orders', 'AdminController@showOrders')->name('orders');
+    Route::get('/', 'AdminController@showOrders')->name('show');
     Route::post('order/time', 'AdminController@timeChanging')->name('timeChanging');
-    Route::delete('order/delete/{id}', 'AdminController@deleteOrder')->name('deleteOrder');
+    Route::delete('order/delete/{order}', 'AdminController@deleteOrder')->name('deleteOrder');
 });
