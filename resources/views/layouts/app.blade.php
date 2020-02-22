@@ -12,8 +12,7 @@
     <title>
         @yield('title', 'SmartBoon')
     </title>
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -21,6 +20,8 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @yield('css')
+
 </head>
 
 <body>
@@ -54,7 +55,7 @@
                             </div>
                         </div>
                         <a class="nav-link" href=" {{ route('admin.add-user') }} ">Add User</a>
-                        <a class="nav-link" href="#">Orders</a>
+                        <a class="nav-link" href=" {{ route('admin.orders') }} ">Orders</a>
                         @endif
                         @endauth
                     </ul>
@@ -99,32 +100,12 @@
         <main class="py-4">
             <div class="container">
                 @yield('content')
-                {{-- @auth
-                @if (auth()->user()->role === 'admin')
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="card">
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item"><a href="{{ route('admin.users') }}">Users</a></li>
-                <li class="list-group-item">Add User</li>
-                <li class="list-group-item">Orders</li>
-                </ul>
             </div>
+        </main>
     </div>
-    <div class="col-md-8">
-        @yield('content')
-    </div>
-    </div>
-    @else
-    @yield('content')
-    @endif
-    @endauth
-    @guest
-    @yield('content')
-    @endguest --}}
-    </div>
-    </main>
-    </div>
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}"></script>
+    @yield('scripts')
 </body>
 
 </html>
