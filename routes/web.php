@@ -42,4 +42,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'isAdmin'])->group(f
     // Import and Export Users
     Route::get('export', 'AdminController@export')->name('export');
     Route::post('import', 'AdminController@import')->name('import');
+
+    // Orders Routes
+    Route::get('orders', 'AdminController@showOrders')->name('orders');
+    Route::post('order/time', 'AdminController@timeChanging')->name('timeChanging');
+    Route::delete('order/delete/{id}', 'AdminController@deleteOrder')->name('deleteOrder');
 });

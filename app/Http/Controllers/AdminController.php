@@ -6,6 +6,8 @@ use App\Exports\UsersExport;
 use App\Http\Requests\AddUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Imports\UsersImport;
+use App\Order;
+use App\ReservingTime;
 use App\User;
 use Illuminate\Http\Request;
 use Faker\Generator as Faker;
@@ -138,5 +140,38 @@ class AdminController extends Controller
         Excel::import(new UsersImport, request()->file('file'));
 
         return back();
+    }
+
+    // Orders
+    public function showOrders()
+    {
+        $orders = Order::whereDate('created_at', now()->today()->format('Y-m-d'))->paginate(50);
+        $time = ReservingTime::first();
+        return view('admin.orders', [
+            'orders' => $orders,
+            'time' => $time
+        ]);
+    }
+
+    public function timeChanging()
+    {
+        // dd(request()->all());
+        // ReservingTime::create([
+        //     'start' => request('start'),
+        //     'end' => request('end')
+        // ]);
+        $time = ReservingTime::first();
+        $time->update([
+            'start' => request('start'),
+            'end' => request('end')
+        ]);
+
+        return redirect()->back();
+    }
+
+    public function deleteOrder(Order $order)
+    {
+        $order->delete();
+        return redirect()->back();
     }
 }
