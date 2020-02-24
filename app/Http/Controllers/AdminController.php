@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exports\UsersExport;
 use App\Http\Requests\AddUserRequest;
+use App\Http\Requests\ReservingTimeRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Imports\UsersImport;
 use App\Order;
@@ -145,7 +146,15 @@ class AdminController extends Controller
     // Orders
     public function showOrders()
     {
-        $orders = Order::whereDate('created_at', now()->today()->format('Y-m-d'))->paginate(50);
+        if (request()->query('orders_day') === 'today') {
+            $orders = Order::whereDate('created_at', now()->today()->format('Y-m-d'))->paginate(50);
+        } elseif (request()->query('orders_day') === 'yesterday') {
+            $orders = Order::whereDate('created_at', now()->yesterday()->format('Y-m-d'))->paginate(50);
+        } elseif (request()->query('orders_day') === 'older') {
+            $orders = Order::whereDate('created_at', '<=', now()->subDays(2)->format('Y-m-d'))->paginate(50);
+        } else {
+            $orders = Order::whereDate('created_at', now()->today()->format('Y-m-d'))->paginate(50);
+        }
         $time = ReservingTime::first();
         return view('orders', [
             'orders' => $orders,
@@ -153,21 +162,22 @@ class AdminController extends Controller
         ]);
     }
 
-    public function timeChanging()
+    public function updateTime(ReservingTime $reservingTime)
     {
         // dd(request()->all());
-        $time = ReservingTime::first();
-        if ($time) {
-            $time->update([
-                'start' => request('start'),
-                'end' => request('end')
-            ]);
-        } else {
-            ReservingTime::create([
-                'start' => request('start'),
-                'end' => request('end')
-            ]);
-        }
+        $reservingTime->update([
+            'start' => request('start'),
+            'end' => request('end')
+        ]);
+        return redirect()->back();
+    }
+
+    public function createTime(ReservingTimeRequest $request)
+    {
+        ReservingTime::create([
+            'start' => $request->start,
+            'end' => $request->end
+        ]);
         return redirect()->back();
     }
 

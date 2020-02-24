@@ -1,5 +1,6 @@
 <?php
 
+use App\Order;
 use App\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -31,6 +32,8 @@ class UsersTableSeeder extends Seeder
             'password' => Hash::make('102010'),
             'role' => 'student'
         ]);
-        factory(User::class, 50)->create();
+        factory(User::class, 50)->create()->each(function ($user) {
+            $user->orders()->save(factory(Order::class)->make());
+        });
     }
 }

@@ -23,12 +23,10 @@ Auth::routes(['register' => false]);
 Route::get('/home', 'HomeController@index')->name('home');
 
 // student routes
-Route::middleware(['auth', 'isStudent'])->group(function(){
-    
+Route::middleware(['auth', 'isStudent'])->group(function () {
     Route::get('/student', 'StudentsController@index')->name('show');
     Route::post('/student', 'StudentsController@store')->name('reserve');
     Route::delete('/student/{order}', 'StudentsController@destroy')->name('delete');
-
 });
 // Admin Routes
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'isAdmin'])->group(function () {
@@ -53,6 +51,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'isAdmin'])->group(f
 Route::prefix('orders')->name('orders.')->middleware(['auth', 'isAdminModerator'])->group(function () {
     // Orders Routes
     Route::get('/', 'AdminController@showOrders')->name('show');
-    Route::post('order/time', 'AdminController@timeChanging')->name('timeChanging');
+    Route::put('order/time/{reservingTime}', 'AdminController@updateTime')->name('updateTime');
+    Route::post('order/time', 'AdminController@createTime')->name('createTime');
     Route::delete('order/delete/{order}', 'AdminController@deleteOrder')->name('deleteOrder');
 });

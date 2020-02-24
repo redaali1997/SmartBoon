@@ -12,20 +12,5 @@ class OrderSeeder extends Seeder
      */
     public function run()
     {
-        Order::create([
-            'user_id' => 6
-        ]);
-
-        Order::create([
-            'user_id' => 7
-        ]);
-
-        Order::create([
-            'user_id' => 8
-        ]);
-
-        Order::create([
-            'user_id' => 9
-        ]);
     }
 }

@@ -9,8 +9,10 @@
             </div>
             <ul class="list-group">
                 <li class="list-group-item">
-                    <form action=" {{ route('orders.timeChanging') }} " method="post">
+                    @if ($time)
+                    <form action=" {{ route('orders.updateTime', $time->id) }} " method="post">
                         @csrf
+                        @method('PUT')
                         <div class="form-group">
                             <label for="start">Start Time</label>
                             <input type="text" class="form-control time_reserving" name="start"
@@ -22,6 +24,37 @@
                         </div>
                         <button class="btn btn-primary" type="submit">Update Time</button>
                     </form>
+                    @else
+                    <form action=" {{ route('orders.createTime') }} " method="post">
+                        @csrf
+                        <div class="form-group">
+                            <label for="start">Start Time</label>
+                            <input type="text" class="form-control time_reserving" name="start" value="">
+                        </div>
+                        <div class="form-group">
+                            <label for="">End Time</label>
+                            <input type="text" class="form-control time_reserving" name="end" value="">
+                        </div>
+                        <button class="btn btn-primary" type="submit">Create Time</button>
+                    </form>
+                    @endif
+                </li>
+                <li class="list-group-item">
+                    <form action=" {{ route('orders.show') }} " method="get">
+                        <div class="form-group">
+                            <label for="orders_day">Orders Day</label>
+                            <select class="form-control" name="orders_day">
+                                <option value="today" {{ request()->query('orders_day') === 'today' ? 'selected' : ''}}>
+                                    Today</option>
+                                <option value="yesterday"
+                                    {{ request()->query('orders_day') === 'yesterday' ? 'selected' : ''}}>Yesterday
+                                </option>
+                                <option value="older" {{ request()->query('orders_day') === 'older' ? 'selected' : ''}}>
+                                    Older</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-primary">Go</button>
+                    </form>
                 </li>
             </ul>
         </div>
@@ -29,7 +62,14 @@
     <div class="col-md-8">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Today Orders : {{ $orders->count() }} Orders</h4>
+                <h4 class="card-title">
+                    @if (request()->query('orders_day') === 'today')
+                    Today
+                    @elseif (request()->query('orders_day') === 'yesterday')
+                    Yesterday
+                    @elseif (request()->query('orders_day') === 'older')
+                    Older
+                    @endif Orders : {{ $orders->count() }} Orders</h4>
             </div>
             <ul class="list-group">
                 <table class="table">

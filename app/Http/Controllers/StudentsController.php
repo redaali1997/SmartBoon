@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Order;
+use App\ReservingTime;
 
 class StudentsController extends Controller
 {
@@ -14,17 +15,22 @@ class StudentsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {   
+    {
         $available = null;
+        $reservingTime = ReservingTime::first();
         $order = auth()->user()->orders()->whereDate('created_at', now()->today()->format('Y-m-d'))->first();
-        if($order) {
+        if ($order) {
             // return view('student.create');
             $available = false;
         } else {
             // return view('student.cancel');
             $available = true;
         }
-        return view('student.student')->with('order', $order)->with('available', $available);
+        return view('student.student', [
+            'order' => $order,
+            'available' => $available,
+            'reservingTime' => $reservingTime
+        ]);
     }
 
     /**
@@ -59,7 +65,7 @@ class StudentsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {   
+    {
         // $user = User::find($id);
         // return view('student.show')->with('user', $user);
     }
@@ -70,8 +76,8 @@ class StudentsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    
-     public function edit($id)
+
+    public function edit($id)
     {
         //
     }
