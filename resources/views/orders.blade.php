@@ -6,6 +6,9 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Reserving Time</h4>
+                <h5>From {{ (int)$time->start > 12 ? (int)$time->start -12 . ' PM' : (int)$time->start . ' AM' }} To
+                    {{ (int)$time->end > 12 ? (int)$time->end -12 . ' PM' : (int)$time->end . ' AM' }}
+                </h5>
             </div>
             <ul class="list-group">
                 <li class="list-group-item">

@@ -16,18 +16,28 @@ class StudentsController extends Controller
      */
     public function index()
     {
+        $reserved = null;
         $available = null;
         $reservingTime = ReservingTime::first();
+
         $order = auth()->user()->orders()->whereDate('created_at', now()->today()->format('Y-m-d'))->first();
+        if (now()->addHours(2)->format('H:i:s') > $reservingTime->start && now()->addHours(2)->format('H:i:s') < $reservingTime->end) {
+            $available = true;
+        } else {
+            $available = false;
+        }
+
         if ($order) {
             // return view('student.create');
-            $available = false;
+            $reserved = true;
         } else {
             // return view('student.cancel');
-            $available = true;
+            $reserved = false;
         }
+
         return view('student.student', [
             'order' => $order,
+            'reserved' => $reserved,
             'available' => $available,
             'reservingTime' => $reservingTime
         ]);
