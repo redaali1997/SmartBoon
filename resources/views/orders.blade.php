@@ -103,7 +103,7 @@
                                     <form action="{{ route('orders.cancelOrder', $order->id) }}" method="post">
                                         @csrf
                                         @method('PUT')
-                                        <button class="btn btn-secondary" type="submit">CANCEL ORDER</button>
+                                        <button class="btn btn-secondary" type="submit">Close ORDER</button>
                                     </form>
                                 @endif
                                 {{-- <form action="{{ route('orders.deleteOrder', $order->id) }}" method="post">

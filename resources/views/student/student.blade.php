@@ -15,7 +15,7 @@
     <button type="submit" class="btn btn-danger">CANCEL RESERVATION</button>
 </form>
 @else
-<div class="alert alert-info">Reserving time has been ended.</div>
+    <div class="alert alert-info">Reservation time has ended.</div>
 @endif
 @else
 @if ($available)

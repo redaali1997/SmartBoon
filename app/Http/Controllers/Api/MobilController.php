@@ -25,13 +25,17 @@ class MobilController extends Controller {
 
     public function order(Request $request) {
         
-        $order = new Order;
-        $user = Auth::guard('api')->user();
-        $order->user_id = $user->id;
-        $order->open = true;
-        $order ->save();
-        
-        return response(['message' => 'Order RECORDED successfully.']);
+        if($request->user()->role === 'student') {
+            $order = new Order;
+            $user = Auth::guard('api')->user();
+            $order->user_id = $user->id;
+            $order->open = true;
+            $order ->save();
+            
+            return response(['message' => 'Order RECORDED successfully.']);
+        } else {
+            return response(['message' => 'You must be a student to make an ORDER.']);
+        }
     }
     
     public function destroy(Order $order)
