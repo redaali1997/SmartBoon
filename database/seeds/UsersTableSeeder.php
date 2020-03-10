@@ -30,6 +30,8 @@ class UsersTableSeeder extends Seeder
             'name' => 'MichealScott',
             'email' => 'prisonmike@example.com',
             'password' => Hash::make('102010'),
+            'room_number' => '1',
+            'boon_number' => '1000',
             'role' => 'student'
         ]);
         factory(User::class, 50)->create()->each(function ($user) {

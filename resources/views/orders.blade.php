@@ -99,11 +99,18 @@
                             </td>
                             <td> {{ $order->created_at }} </td>
                             <td>
-                                <form action="{{ route('orders.deleteOrder', $order->id) }}" method="post">
+                                @if ($order->open)
+                                    <form action="{{ route('orders.cancelOrder', $order->id) }}" method="post">
+                                        @csrf
+                                        @method('PUT')
+                                        <button class="btn btn-secondary" type="submit">CANCEL ORDER</button>
+                                    </form>
+                                @endif
+                                {{-- <form action="{{ route('orders.deleteOrder', $order->id) }}" method="post">
                                     @csrf
                                     @method('DELETE')
                                     <button class="btn btn-danger" type="submit">Delete</button>
-                                </form>
+                                </form> --}}
                             </td>
                         </tr>
                         @endforeach

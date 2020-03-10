@@ -181,9 +181,17 @@ class AdminController extends Controller
         return redirect()->back();
     }
 
-    public function deleteOrder(Order $order)
+    public function cancelOrder(Order $order)
     {
-        $order->delete();
+        $order->update([
+            'open' => '0'
+        ]);
         return redirect()->back();
     }
+
+    // public function deleteOrder(Order $order)
+    // {
+    //     $order->delete();
+    //     return redirect()->back();
+    // }
 }
