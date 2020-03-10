@@ -27,11 +27,16 @@ class MobilController extends Controller {
         
         $order = new Order;
         $user = Auth::guard('api')->user();
-        $order->user_id = $user->id();
-        $order->open = $request->open;
+        $order->user_id = $user->id;
+        $order->open = true;
         $order ->save();
-        $accessToken = $order->createToken('authToken')->accessToken;
         
-        return response(['order' => Auth::order(), 'access_token' => $accessToken]);
+        return response(['message' => 'Order RECORDED successfully.']);
+    }
+    
+    public function destroy(Order $order)
+    {
+        $order->delete();
+        return response(['message' => 'Order REMOVED successfully.']);
     }
 }

@@ -22,5 +22,6 @@ Route::post('/login', 'Api\MobilController@login');
 Route::middleware('auth:api')->group(function() {
 
     Route::post('/orders', 'Api\MobilController@order');
+    Route::post('/orders/{order}', 'Api\MobilController@destroy');
 
 });
