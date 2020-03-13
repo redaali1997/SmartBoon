@@ -1,7 +1,6 @@
 @extends('layouts.app')
 @section('title', 'Students')
 @section('content')
-@include('admin.partials.flash')
 @if (request()->query('search'))
 <a href=" {{ route('admin.students') }} " class="btn btn-primary">Back To Students</a>
 @endif
@@ -17,8 +16,9 @@
     </div>
     <ul class="list-group">
         {{ $actives->links() }}
-        <table class="table">
-            <thead>
+        <br>
+        <table class="table table-striped">
+            <thead class="thead-dark">
                 <tr>
                     <th>Name</th>
                     <th>Email</th>
@@ -50,13 +50,15 @@
     </div>
     <ul class="list-group">
         {{ $inactives->links() }}
-        <table class="table">
-            <thead>
+        <br>
+        <table class="table table-striped">
+            <thead class="thead-dark">
                 <tr>
                     <th>Name</th>
                     <th>Email</th>
                     <th>Boon Number</th>
                     <th>Room Number</th>
+                    <th></th>
                     <th></th>
                 </tr>
             </thead>
@@ -67,6 +69,13 @@
                     <td> {{ $inactive->email }} </td>
                     <td> {{ $inactive->boon_number }} </td>
                     <td> {{ $inactive->room_number }} </td>
+                    <td>
+                        <form action=" {{ route('admin.activate', $inactive->id) }} " method="post">
+                            @csrf
+                            @method('PUT')
+                            <button type="submit" class="btn btn-danger">Activate</button>
+                        </form>
+                    </td>
                     <td>
                         <a href=" {{ route('admin.edit', $inactive->id) }} " class="btn btn-primary">Edit</a>
                     </td>

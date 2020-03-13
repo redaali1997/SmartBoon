@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="card">
-    <div class="card-header">{{ __('Login') }}</div>
+    <div class="card-header bg-dark text-light">{{ __('Login') }}</div>
 
     <div class="card-body">
         <form method="POST" action="{{ route('login') }}">
@@ -59,8 +59,8 @@
                     </button>
 
                     @if (Route::has('password.request'))
-                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                        {{ __('First login Or Forgot Your Password?') }}
+                    <a class="btn btn-secondary" href="{{ route('password.request') }}">
+                        {{ __('Reset Password') }}
                     </a>
                     @endif
                 </div>

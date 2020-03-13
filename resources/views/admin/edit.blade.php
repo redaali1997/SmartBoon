@@ -1,12 +1,10 @@
 @extends('layouts.app')
 @section('title', $user->name)
 @section('content')
-@include('admin.partials.flash')
-@include('admin.partials.errors')
 @if ($user->role === 'student')
-<a href=" {{ route('admin.students') }} " class="btn btn-primary">Back to students</a>
+<a href=" {{ route('admin.students') }} " class="btn btn-outline-primary">Back to students</a>
 @else
-<a href=" {{ route('admin.moderators') }} " class="btn btn-primary">Back to moderators</a>
+<a href=" {{ route('admin.moderators') }} " class="btn btn-outline-primary">Back to moderators</a>
 @endif
 <div class="card">
     <div class="card-body">
@@ -14,9 +12,9 @@
     </div>
     <ul class="list-group">
         <li class="list-group-item">
-            <form action=" {{ route('admin.update', $user->id) }} " method="POST">
+            <form action="{{ route('admin.update', $user->id) }}" method="POST">
                 @csrf
-                @method('PUT')
+                @method('PATCH')
                 <div class="form-group">
                     <label for="name">Username:</label>
                     <input type="text" name="username" value="{{ $user->name }}" class="form-control">
@@ -44,7 +42,7 @@
                     </div>
                 </div>
                 @endif
-                <button class="btn btn-primary">Update</button>
+                <button class="btn btn-primary" type="submit">Update</button>
             </form>
             <br>
             <form action=" {{ route('admin.delete', $user->id) }} " method="post">

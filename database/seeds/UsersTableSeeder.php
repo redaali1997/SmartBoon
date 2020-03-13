@@ -35,7 +35,9 @@ class UsersTableSeeder extends Seeder
             'role' => 'student'
         ]);
         factory(User::class, 50)->create()->each(function ($user) {
-            $user->orders()->save(factory(Order::class)->make());
+            $user->orders()->save(factory(Order::class)->make([
+                'created_at' => '2010-10-04 00:00:00'
+            ]));
         });
     }
 }

@@ -26,16 +26,11 @@
 
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand text-white" href="{{ url('/') }}">
                     {{ config('app.name', 'SmartBoon') }}
                 </a>
-                @auth
-                @if (auth()->user()->isStudent())
-                <a href="/student">Reserve</a>
-                @endif
-                @endauth
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
                     data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                     aria-label="{{ __('Toggle navigation') }}">
@@ -48,7 +43,7 @@
                         @auth
                         @if (auth()->user()->isAdmin())
                         <div class="dropdown open">
-                            <button class="btn btn-grey dropdown-toggle" type="button" id="triggerId"
+                            <button class="btn btn-grey text-light dropdown-toggle" type="button" id="triggerId"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Users
                             </button>
@@ -63,6 +58,9 @@
                         @endif
                         @if (auth()->user()->isAdmin() or auth()->user()->isModerator())
                         <a class="nav-link" href=" {{ route('orders.show') }} ">Orders</a>
+                        @endif
+                        @if (auth()->user()->isStudent())
+                        <a href="/student" class="nav-link" style="color:white">Reserve</a>
                         @endif
                         @endauth
                     </ul>

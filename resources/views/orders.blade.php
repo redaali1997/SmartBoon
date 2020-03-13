@@ -6,9 +6,11 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Reserving Time</h4>
+                @if ($time)
                 <h5>From {{ (int)$time->start > 12 ? (int)$time->start -12 . ' PM' : (int)$time->start . ' AM' }} To
                     {{ (int)$time->end > 12 ? (int)$time->end -12 . ' PM' : (int)$time->end . ' AM' }}
                 </h5>
+                @endif
             </div>
             <ul class="list-group">
                 <li class="list-group-item">
@@ -18,12 +20,12 @@
                         @method('PUT')
                         <div class="form-group">
                             <label for="start">Start Time</label>
-                            <input type="text" class="form-control time_reserving" name="start"
+                            <input type="time" class="form-control time_reserving" name="start"
                                 value="{{ $time->start }}">
                         </div>
                         <div class="form-group">
                             <label for="">End Time</label>
-                            <input type="text" class="form-control time_reserving" name="end" value="{{ $time->end }}">
+                            <input type="time" class="form-control time_reserving" name="end" value="{{ $time->end }}">
                         </div>
                         <button class="btn btn-primary" type="submit">Update Time</button>
                     </form>
@@ -32,11 +34,11 @@
                         @csrf
                         <div class="form-group">
                             <label for="start">Start Time</label>
-                            <input type="text" class="form-control time_reserving" name="start" value="">
+                            <input type="time" class="form-control time_reserving" name="start" value="">
                         </div>
                         <div class="form-group">
                             <label for="">End Time</label>
-                            <input type="text" class="form-control time_reserving" name="end" value="">
+                            <input type="time" class="form-control time_reserving" name="end" value="">
                         </div>
                         <button class="btn btn-primary" type="submit">Create Time</button>
                     </form>
@@ -45,34 +47,52 @@
                 <li class="list-group-item">
                     <form action=" {{ route('orders.show') }} " method="get">
                         <div class="form-group">
-                            <label for="orders_day">Orders Day</label>
-                            <select class="form-control" name="orders_day">
-                                <option value="today" {{ request()->query('orders_day') === 'today' ? 'selected' : ''}}>
-                                    Today</option>
-                                <option value="yesterday"
-                                    {{ request()->query('orders_day') === 'yesterday' ? 'selected' : ''}}>Yesterday
-                                </option>
-                                <option value="older" {{ request()->query('orders_day') === 'older' ? 'selected' : ''}}>
-                                    Older</option>
-                            </select>
+                            <label for="search">Search by boon number</label>
+                            <input type="text" class="form-control" name="search" placeholder="Boon Number"
+                                value="{{ request()->query('search') }}">
                         </div>
-                        <button class="btn btn-primary">Go</button>
+                        <div class="form-group">
+                            <label for="date">Search by date</label>
+                            <input type="date" class="form-control" name="date" value="{{request()->query('date')}}">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Go</button>
                     </form>
+                    {{-- <form action=" {{ route('orders.show') }} " method="get">
+                    <div class="form-group">
+                        <label for="orders_day">Orders Day</label>
+                        <select class="form-control" name="orders_day">
+                            <option value="today" {{ request()->query('orders_day') === 'today' ? 'selected' : ''}}>
+                                Today</option>
+                            <option value="yesterday"
+                                {{ request()->query('orders_day') === 'yesterday' ? 'selected' : ''}}>Yesterday
+                            </option>
+                            <option value="older" {{ request()->query('orders_day') === 'older' ? 'selected' : ''}}>
+                                Older</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary">Go</button>
+                    </form> --}}
                 </li>
             </ul>
         </div>
     </div>
     <div class="col-md-8">
+        {{-- <form action="{{ route('orders.show') }}" method="GET">
+        <div class="form-group">
+            <input type="text" class="form-control" name="search" id="" aria-describedby="helpId"
+                placeholder="Search for a student by boon number" value="{{ request()->query('search') }}">
+        </div>
+        </form> --}}
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">
-                    @if (request()->query('orders_day') === 'today')
+                    @if(request()->query('date'))
+                    {{ request()->query('date') }}
+                    @else
                     Today
-                    @elseif (request()->query('orders_day') === 'yesterday')
-                    Yesterday
-                    @elseif (request()->query('orders_day') === 'older')
-                    Older
-                    @endif Orders : {{ $orders->count() }} Orders</h4>
+                    @endif
+                    Orders
+                    <span class="badge badge-pill badge-primary">{{ $orders->count() }} Orders</span></h4>
             </div>
             <ul class="list-group">
                 <table class="table">
@@ -100,16 +120,16 @@
                             <td> {{ $order->created_at }} </td>
                             <td>
                                 @if ($order->open)
-                                    <form action="{{ route('orders.cancelOrder', $order->id) }}" method="post">
-                                        @csrf
-                                        @method('PUT')
-                                        <button class="btn btn-secondary" type="submit">Close ORDER</button>
-                                    </form>
+                                <form action="{{ route('orders.cancelOrder', $order->id) }}" method="post">
+                                    @csrf
+                                    @method('PUT')
+                                    <button class="btn btn-secondary" type="submit">Close order</button>
+                                </form>
                                 @endif
                                 {{-- <form action="{{ route('orders.deleteOrder', $order->id) }}" method="post">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="btn btn-danger" type="submit">Delete</button>
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn btn-danger" type="submit">Delete</button>
                                 </form> --}}
                             </td>
                         </tr>
@@ -130,6 +150,7 @@
     noCalendar: true,
     dateFormat: "H:i:s",
     });
+    flatpickr(".orders_date");
 </script>
 @endsection
 

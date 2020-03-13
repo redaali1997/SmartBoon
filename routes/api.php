@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,11 +18,12 @@ use Illuminate\Http\Request;
 //     return $request->user();
 // });
 
-Route::post('/login', 'Api\MobilController@login');
+Route::post('login', 'Api\MobilController@login');
 
-Route::middleware('auth:api')->group(function() {
-
-    Route::post('/orders', 'Api\MobilController@order');
-    Route::post('/orders/{order}', 'Api\MobilController@destroy');
-
+Route::middleware('auth:api')->group(function () {
+    Route::get('/user', 'Api\MobilController@userData');
+    Route::post('/create-order', 'Api\MobilController@createOrder');
+    Route::post('/cancel-order/{order}', 'Api\MobilController@cancelOrder');
 });
+
+Route::get('reserving-time', 'Api\MobilController@reservingTime');

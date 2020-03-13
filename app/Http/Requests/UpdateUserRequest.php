@@ -25,7 +25,6 @@ class UpdateUserRequest extends FormRequest
     {
         return [
             'email' => 'required',
-            'boon_number' => 'required'
         ];
     }
 }

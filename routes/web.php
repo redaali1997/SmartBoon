@@ -33,8 +33,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'isAdmin'])->group(f
     // Student Routes
     Route::get('students', 'AdminController@students')->name('students');
     Route::get('user/{user}/edit', 'AdminController@edit')->name('edit');
-    Route::put('user/{user}', 'AdminController@update')->name('update');
+    Route::patch('user/{user}', 'AdminController@update')->name('update');
     Route::delete('user/{user}', 'AdminController@delete')->name('delete');
+    Route::put('user/{user}', 'AdminController@activate')->name('activate');
 
     // Moderator Routes
     Route::get('moderators', 'AdminController@moderators')->name('moderators');

@@ -1,14 +1,13 @@
 @extends('layouts.app')
 @section('title', 'Moderators')
 @section('content')
-@include('admin.partials.flash')
 <div class="card">
     <div class="card-body">
         <h4 class="card-title">Moderators</h4>
     </div>
     <ul class="list-group">
-        <table class="table">
-            <thead>
+        <table class="table table-striper">
+            <thead class="thead-dark">
                 <tr>
                     <td>Name</td>
                     <td>Email</td>

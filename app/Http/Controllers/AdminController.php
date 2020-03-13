@@ -87,6 +87,14 @@ class AdminController extends Controller
         }
     }
 
+    public function activate(User $user)
+    {
+        $user->update([
+            'activated' => 1
+        ]);
+        return redirect()->back();
+    }
+
     // Add User
     public function addUser()
     {
@@ -95,7 +103,6 @@ class AdminController extends Controller
 
     public function storeUser(AddUserRequest $request, Faker $faker)
     {
-        // dd($request->all());
         $activated = null;
         if ($request->has('activated')) {
             $activated = 1;
@@ -111,7 +118,6 @@ class AdminController extends Controller
             'password' => Hash::make(Str::random(10)),
             'activated' => $activated,
             'boon_number' => $faker->unique()->numberBetween(1000, 10000),
-            'code' => Str::random(6)
         ]);
 
         session()->flash('success', 'The user has been created.');
@@ -146,15 +152,34 @@ class AdminController extends Controller
     // Orders
     public function showOrders()
     {
-        if (request()->query('orders_day') === 'today') {
-            $orders = Order::whereDate('created_at', now()->today()->format('Y-m-d'))->paginate(50);
-        } elseif (request()->query('orders_day') === 'yesterday') {
-            $orders = Order::whereDate('created_at', now()->yesterday()->format('Y-m-d'))->paginate(50);
-        } elseif (request()->query('orders_day') === 'older') {
-            $orders = Order::whereDate('created_at', '<=', now()->subDays(2)->format('Y-m-d'))->paginate(50);
+        $date = request()->query('date');
+        $search = request()->query('search');
+        if ($date && !$search) {
+            $orders = Order::whereDate('created_at', $date)->paginate(50);
+        } elseif ($search && !$date) {
+            $user = User::where('boon_number', $search)->first();
+            $orders = Order::whereDate('created_at', now()->today()->format('Y-m-d'))->where('user_id', $user->id)->get();
+        } elseif ($date && $search) {
+            $user = User::where('boon_number', $search)->first();
+            $orders = Order::whereDate('created_at', $date)->where('user_id', $user->id)->get();
         } else {
             $orders = Order::whereDate('created_at', now()->today()->format('Y-m-d'))->paginate(50);
         }
+        // if (request()->query('orders_day') === 'today') {
+        //     $orders = Order::whereDate('created_at', now()->today()->format('Y-m-d'))->paginate(50);
+        // } elseif (request()->query('orders_day') === 'yesterday') {
+        //     $orders = Order::whereDate('created_at', now()->yesterday()->format('Y-m-d'))->paginate(50);
+        // } elseif (request()->query('orders_day') === 'older') {
+        //     $orders = Order::whereDate('created_at', '<=', now()->subDays(2)->format('Y-m-d'))->paginate(50);
+        // } else {
+        //     $search = request()->input('search', '');
+        //     if ($search) {
+        //         $user = User::where('boon_number', $search)->first();
+        //         $orders = Order::whereDate('created_at', now()->today()->format('Y-m-d'))->where('user_id', $user->id)->paginate(50);
+        //     } else {
+        //         $orders = Order::whereDate('created_at', now()->today()->format('Y-m-d'))->paginate(50);
+        //     }
+        // }
         $time = ReservingTime::first();
         return view('orders', [
             'orders' => $orders,
@@ -164,7 +189,6 @@ class AdminController extends Controller
 
     public function updateTime(ReservingTime $reservingTime)
     {
-        // dd(request()->all());
         $reservingTime->update([
             'start' => request('start'),
             'end' => request('end')
@@ -184,14 +208,8 @@ class AdminController extends Controller
     public function cancelOrder(Order $order)
     {
         $order->update([
-            'open' => '0'
+            'open' => 0
         ]);
         return redirect()->back();
     }
-
-    // public function deleteOrder(Order $order)
-    // {
-    //     $order->delete();
-    //     return redirect()->back();
-    // }
 }

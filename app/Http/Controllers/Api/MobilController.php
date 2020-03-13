@@ -6,16 +6,19 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Order;
+use App\ReservingTime;
 
-class MobilController extends Controller {
-    
-    public function login(Request $request) {
+class MobilController extends Controller
+{
+
+    public function login(Request $request)
+    {
         $login = $request->validate([
             'email' => 'required|string',
             'password' => 'required'
         ]);
 
-        if(!Auth::attempt($login)) {
+        if (!Auth::attempt($login)) {
             return response(['message' => 'Invalid login credentials.']);
         }
 
@@ -23,24 +26,33 @@ class MobilController extends Controller {
         return response(['user' => Auth::user(), 'access_token' => $accessToken]);
     }
 
-    public function order(Request $request) {
-        
-        if($request->user()->role === 'student') {
+    public function userData(Request $request)
+    {
+        return auth()->user();
+    }
+
+    public function reservingTime()
+    {
+        return ReservingTime::all();
+    }
+
+    public function createOrder(Request $request)
+    {
+        if ($request->user()->role === 'student') {
             $order = new Order;
             $user = Auth::guard('api')->user();
             $order->user_id = $user->id;
-            $order->open = true;
-            $order ->save();
-            
-            return response(['message' => 'Order RECORDED successfully.']);
+            $order->save();
+
+            return response(['message' => 'Order created successfully.']);
         } else {
-            return response(['message' => 'You must be a student to make an ORDER.']);
+            return response(['message' => 'You must be a student to make an order.']);
         }
     }
-    
-    public function destroy(Order $order)
+
+    public function cancelOrder(Order $order)
     {
         $order->delete();
-        return response(['message' => 'Order REMOVED successfully.']);
+        return response(['message' => 'Order removed successfully.']);
     }
 }

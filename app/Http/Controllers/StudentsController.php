@@ -18,28 +18,38 @@ class StudentsController extends Controller
     {
         $reserved = null;
         $available = null;
+        $activated = null;
         $reservingTime = ReservingTime::first();
-
         $order = auth()->user()->orders()->whereDate('created_at', now()->today()->format('Y-m-d'))->first();
-        if (now()->addHours(2)->format('H:i:s') > $reservingTime->start && now()->addHours(2)->format('H:i:s') < $reservingTime->end) {
+
+        // $start = (int) $reservingTime->start >= 12 ? (int) $reservingTime->start - 12 : (int) $reservingTime->start;
+        // $end = (int) $reservingTime->end >= 12 ? (int) $reservingTime->end - 12 : (int) $reservingTime->end;
+        if (now()->addHours(2)->format('H:i:s') >= $reservingTime->start && now()->addHours(2)->format('H:i:s') < $reservingTime->end) {
             $available = true;
         } else {
             $available = false;
         }
 
+        if (auth()->user()->activated) {
+            $activated = 1;
+        } else {
+            $activated = 0;
+        }
+
         if ($order) {
             // return view('student.create');
-            $reserved = true;
+            $reserved = 1;
         } else {
             // return view('student.cancel');
-            $reserved = false;
+            $reserved = 0;
         }
 
         return view('student.student', [
             'order' => $order,
             'reserved' => $reserved,
             'available' => $available,
-            'reservingTime' => $reservingTime
+            'reservingTime' => $reservingTime,
+            'activated' => $activated
         ]);
     }
 
