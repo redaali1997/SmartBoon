@@ -71,7 +71,7 @@
     <div class="flex-center position-ref full-height">
         <div class="content">
             <div class="title m-b-md">
-                SmartBoon
+                <h1>SmartBoon</h1>
             </div>
             @if (Route::has('login'))
             <div>
