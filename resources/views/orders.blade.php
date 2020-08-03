@@ -91,8 +91,11 @@
                     @else
                     Today
                     @endif
-                    Orders
-                    <span class="badge badge-pill badge-primary">{{ $orders->count() }} Orders</span></h4>
+                    @if ($orders)
+                        Orders
+                        <span class="badge badge-pill badge-primary">{{ $orders->count() }} Orders</span></h4>
+                    @endif
+
             </div>
             <ul class="list-group">
                 <table class="table">
@@ -106,34 +109,40 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($orders as $order)
-                        <tr>
-                            <td scope="row"> {{ $order->user->name }} </td>
-                            <td> {{ $order->user->boon_number }} </td>
-                            <td>
-                                @if ($order->open === 1)
-                                Opened
-                                @else
-                                Closed
-                                @endif
-                            </td>
-                            <td> {{ $order->created_at }} </td>
-                            <td>
-                                @if ($order->open)
-                                <form action="{{ route('orders.cancelOrder', $order->id) }}" method="post">
-                                    @csrf
-                                    @method('PUT')
-                                    <button class="btn btn-secondary" type="submit">Close order</button>
-                                </form>
-                                @endif
-                                {{-- <form action="{{ route('orders.deleteOrder', $order->id) }}" method="post">
-                                @csrf
-                                @method('DELETE')
-                                <button class="btn btn-danger" type="submit">Delete</button>
-                                </form> --}}
-                            </td>
-                        </tr>
-                        @endforeach
+                        @if ($orders)
+                            @foreach ($orders as $order)
+                                <tr>
+                                    <td scope="row"> {{ $order->user->name }} </td>
+                                    <td> {{ $order->user->boon_number }} </td>
+                                    <td>
+                                        @if ($order->open === 1)
+                                        Opened
+                                        @else
+                                        Closed
+                                        @endif
+                                    </td>
+                                    <td> {{ $order->created_at }} </td>
+                                    <td>
+                                        @if ($order->open)
+                                        <form action="{{ route('orders.cancelOrder', $order->id) }}" method="post">
+                                            @csrf
+                                            @method('PUT')
+                                            <button class="btn btn-secondary" type="submit">Close order</button>
+                                        </form>
+                                        @endif
+                                        {{-- <form action="{{ route('orders.deleteOrder', $order->id) }}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn btn-danger" type="submit">Delete</button>
+                                        </form> --}}
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @else
+                                <tr>
+                                    <p class="alert alert-danger">There is no data</p>
+                                </tr>
+                        @endif
                     </tbody>
                 </table>
             </ul>

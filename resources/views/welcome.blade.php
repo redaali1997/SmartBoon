@@ -15,7 +15,8 @@
     <style>
         html,
         body {
-            background-color: #37474F;
+            background: url('{{ asset('faculty.png') }}') no-repeat center center/cover;
+            /* background-color: #37474F; */
             color: white;
             font-family: 'Nunito', sans-serif;
             font-weight: 200;
@@ -45,6 +46,9 @@
 
         .content {
             text-align: center;
+            background-color: white;
+            padding: 50px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5)
         }
 
         .title {
@@ -71,17 +75,17 @@
     <div class="flex-center position-ref full-height">
         <div class="content">
             <div class="title m-b-md">
-                SmartBoon
+                <h1 style="color: #37474F">SmartBoon</h1>
             </div>
             @if (Route::has('login'))
             <div>
                 @auth
-                <a href="{{ url('/home') }}" class="btn btn-outline-primary btn-lg text-light">Home</a>
+                <a href="{{ url('/home') }}" class="btn btn-primary btn-lg ">Home</a>
                 @else
-                <a href="{{ route('login') }}" class="btn btn-outline-primary btn-lg text-light">Login</a>
+                <a href="{{ route('login') }}" class="btn btn-primary btn-lg">Login</a>
 
                 <a href="{{ route('password.request') }}"
-                    class="btn btn-outline-secondary btn-lg text-light">Register</a>
+                    class="btn btn-secondary btn-lg">Register</a>
                 @endauth
             </div>
             @endif

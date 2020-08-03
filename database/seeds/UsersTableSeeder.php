@@ -14,30 +14,25 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        User::create([
-            'name' => 'RedaAli',
+        factory(User::class)->create([
             'email' => 'reda@example.com',
-            'password' => Hash::make('105090'),
             'role' => 'admin'
         ]);
-        User::create([
-            'name' => 'MohamedAref',
+
+        factory(User::class)->create([
             'email' => 'mohamed@example.com',
-            'password' => Hash::make('105090'),
             'role' => 'moderator'
         ]);
-        User::create([
-            'name' => 'MichealScott',
-            'email' => 'prisonmike@example.com',
-            'password' => Hash::make('102010'),
-            'room_number' => '1',
-            'boon_number' => '1000',
+
+        factory(User::class)->create([
+            'email' => 'ahmed@example.com',
             'role' => 'student'
         ]);
-        factory(User::class, 50)->create()->each(function ($user) {
-            $user->orders()->save(factory(Order::class)->make([
-                'created_at' => '2010-10-04 00:00:00'
-            ]));
-        });
+
+        // factory(User::class, 50)->create()->each(function ($user) {
+        //     $user->orders()->save(factory(Order::class)->make([
+        //         'created_at' => '2010-10-04 00:00:00'
+        //     ]));
+        // });
     }
 }

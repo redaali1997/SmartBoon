@@ -158,10 +158,18 @@ class AdminController extends Controller
             $orders = Order::whereDate('created_at', $date)->paginate(50);
         } elseif ($search && !$date) {
             $user = User::where('boon_number', $search)->first();
-            $orders = Order::whereDate('created_at', now()->today()->format('Y-m-d'))->where('user_id', $user->id)->get();
+            if ($user) {
+                $orders = Order::whereDate('created_at', now()->today()->format('Y-m-d'))->where('user_id', $user->id)->get();
+            } else {
+                $orders = null;
+            }
         } elseif ($date && $search) {
             $user = User::where('boon_number', $search)->first();
-            $orders = Order::whereDate('created_at', $date)->where('user_id', $user->id)->get();
+            if ($user) {
+                $orders = Order::whereDate('created_at', $date)->where('user_id', $user->id)->get();
+            } else {
+                $orders = null;
+            }
         } else {
             $orders = Order::whereDate('created_at', now()->today()->format('Y-m-d'))->paginate(50);
         }
