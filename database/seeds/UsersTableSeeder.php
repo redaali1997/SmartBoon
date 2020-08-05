@@ -18,19 +18,23 @@ class UsersTableSeeder extends Seeder
         factory(User::class)->create([
             'name' => 'RedaAli',
             'email' => 'reda@example.com',
-            'role' => 'admin'
+            'role' => 'admin',
+            'password' => Hash::make("102010")
         ]);
 
         factory(User::class)->create([
             'name' => 'MohamedAref',
             'email' => 'mohamed@example.com',
-            'role' => 'moderator'
+            'role' => 'moderator',
+            'password' => Hash::make("102010")
         ]);
 
         factory(User::class)->create([
-            'name' => 'Ahmed',
-            'email' => 'ahmed@example.com',
-            'role' => 'student'
+            'name' => 'MichealScott',
+            'email' => 'prisonmike@example.com',
+            'role' => 'student',
+            'activated' => true,
+            'password' => Hash::make("102010")
         ]);
     }
 }
