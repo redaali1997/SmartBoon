@@ -12,6 +12,9 @@ class TimeReservingSeeder extends Seeder
      */
     public function run()
     {
-        //
+        factory(ReservingTime::class)->create([
+            'start' => '19:00:00',
+            'end' => '23:00:00'
+        ]);
     }
 }
