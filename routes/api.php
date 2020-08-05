@@ -24,6 +24,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/user', 'Api\MobilController@userData');
     Route::post('/create-order', 'Api\MobilController@createOrder');
     Route::post('/cancel-order', 'Api\MobilController@cancelOrder');
+    Route::post('/order-done', 'Api\MobilController@orderDone');
 });
 
 Route::get('reserving-time', 'Api\MobilController@reservingTime');
