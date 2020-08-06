@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use App\Order;
+use App\User;
 use App\ReservingTime;
 
 class MobilController extends Controller
@@ -50,9 +52,20 @@ class MobilController extends Controller
         }
     }
 
-    public function cancelOrder(Order $order)
+    public function cancelOrder(Request $request)
     {
+        $user = Auth::guard('api')->user();
+        $order = Order::where('user_id', $user->id)->whereDate('created_at', now()->today());
         $order->delete();
         return response(['message' => 'Order removed successfully.']);
     }
+
+    public function orderDone(Request $request) 
+    {
+        $user = Auth::guard('api')->user();
+        DB::table('orders')->where('user_id', $user->id)->update(['open' => 0]);
+
+        return response(['message' => 'Order is Done.']);
+    }
+    
 }
