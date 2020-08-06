@@ -22,13 +22,11 @@
     @if ($activated)
     @if ($available)
     @if ($reserved)
-    @if ($notDone)
     <form action="{{route('delete', $order->id)}}" method="POST">
         @csrf
         @method('DELETE')
         <button type="submit" class="btn btn-danger">Cancel Reservation</button>
     </form>
-    @endif
     @else
     <form action="{{route('reserve')}}" method="POST">
         @csrf

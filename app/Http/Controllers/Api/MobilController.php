@@ -63,7 +63,9 @@ class MobilController extends Controller
     public function orderDone(Request $request) 
     {
         $user = Auth::guard('api')->user();
-        DB::table('orders')->where('user_id', $user->id)->update(['open' => 0]);
+        DB::table('orders')->where('user_id', $user->id)
+            ->whereDate('created_at', now()->today()->subDay())
+                ->update(['open' => 0]);
 
         return response(['message' => 'Order is Done.']);
     }

@@ -44,19 +44,12 @@ class StudentsController extends Controller
             $reserved = 0;
         }
 
-        if ($order->open) {
-            $notDone = 1;
-        } else {
-            $notDone = 0;
-        }
-
         return view('student.student', [
             'order' => $order,
             'reserved' => $reserved,
             'available' => $available,
             'reservingTime' => $reservingTime,
-            'activated' => $activated,
-            'notDone' => $notDone
+            'activated' => $activated
         ]);
     }
 
