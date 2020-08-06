@@ -63,10 +63,16 @@ class MobilController extends Controller
     public function orderDone(Request $request)
     {
         $user = Auth::guard('api')->user();
-        DB::table('orders')->where('user_id', $user->id)
-            ->whereDate('created_at', now()->today()->subDay())
-            ->update(['open' => 0]);
+        $order = Order::where('user_id', $user->id)
+            ->whereDate('created_at', now()->today()->subDay())->first();
 
-        return response(['message' => 'Order is Done.']);
+        if ($order && !($order->open === 0)) {
+            $order->update(['open' => 0]);
+            return response(['message' => 'Order is Done.']);
+        } else if ($order && $order->open === 0) {
+            return response(['message' => 'Failed. Order already closed.']);
+        } else {
+            return response(['message' => 'Failed. Cannot find order.']);
+        }
     }
 }
