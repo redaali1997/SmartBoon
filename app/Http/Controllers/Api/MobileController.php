@@ -9,7 +9,7 @@ use App\Order;
 use App\User;
 use App\ReservingTime;
 
-class MobilController extends Controller
+class MobileController extends Controller
 {
 
     public function login(Request $request)
