@@ -124,7 +124,7 @@
                                     <td> {{ $order->created_at }} </td>
                                     <td>
                                         @if ($order->open)
-                                        <form action="{{ route('orders.cancelOrder', $order->id) }}" method="post">
+                                        <form action="{{ route('orders.closeOrder', $order->id) }}" method="post">
                                             @csrf
                                             @method('PUT')
                                             <button class="btn btn-secondary" type="submit">Close order</button>

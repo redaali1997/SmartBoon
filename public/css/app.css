@@ -10884,3 +10884,19 @@ a.text-dark:focus {
   }
 }
 
+.orange,
+.card-header {
+  background-color: #ff8a66;
+}
+
+.btn {
+  font-size: 20px;
+  border: 1px solid #ff8a66;
+  color: #ff8a66;
+  background-color: transparent;
+}
+
+.thead-dark {
+  background-color: #ff8a66;
+}
+

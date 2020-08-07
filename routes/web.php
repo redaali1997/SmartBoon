@@ -54,6 +54,6 @@ Route::prefix('orders')->name('orders.')->middleware(['auth', 'isAdminModerator'
     Route::get('/', 'AdminController@showOrders')->name('show');
     Route::put('order/time/{reservingTime}', 'AdminController@updateTime')->name('updateTime');
     Route::post('order/time', 'AdminController@createTime')->name('createTime');
-    Route::put('order/cancel/{order}', 'AdminController@cancelOrder')->name('cancelOrder');
+    Route::put('order/close/{order}', 'AdminController@closeOrder')->name('closeOrder');
     // Route::delete('order/delete/{order}', 'AdminController@deleteOrder')->name('deleteOrder');
 });

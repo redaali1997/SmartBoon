@@ -46,7 +46,7 @@
 
         .content {
             text-align: center;
-            background-color: white;
+            background-color: #FF8A66;
             padding: 50px;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.5)
         }
@@ -68,6 +68,11 @@
         .m-b-md {
             margin-bottom: 30px;
         }
+        .btn {
+            font-size: 20px;
+            border: 1px solid white;
+            color: white
+        }
     </style>
 </head>
 
@@ -75,17 +80,17 @@
     <div class="flex-center position-ref full-height">
         <div class="content">
             <div class="title m-b-md">
-                <h1 style="color: #37474F">SmartBoon</h1>
+                <h1 style="color: white">SmartBoon</h1>
             </div>
             @if (Route::has('login'))
             <div>
                 @auth
-                <a href="{{ url('/home') }}" class="btn btn-primary btn-lg ">Home</a>
+                <a href="{{ url('/home') }}" class="btn ">Home</a>
                 @else
-                <a href="{{ route('login') }}" class="btn btn-primary btn-lg">Login</a>
+                <a href="{{ route('login') }}" class="btn">Login</a>
 
                 <a href="{{ route('password.request') }}"
-                    class="btn btn-secondary btn-lg">Register</a>
+                    class="btn">Register</a>
                 @endauth
             </div>
             @endif

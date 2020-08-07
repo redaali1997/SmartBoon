@@ -173,21 +173,6 @@ class AdminController extends Controller
         } else {
             $orders = Order::whereDate('created_at', now()->today()->format('Y-m-d'))->paginate(50);
         }
-        // if (request()->query('orders_day') === 'today') {
-        //     $orders = Order::whereDate('created_at', now()->today()->format('Y-m-d'))->paginate(50);
-        // } elseif (request()->query('orders_day') === 'yesterday') {
-        //     $orders = Order::whereDate('created_at', now()->yesterday()->format('Y-m-d'))->paginate(50);
-        // } elseif (request()->query('orders_day') === 'older') {
-        //     $orders = Order::whereDate('created_at', '<=', now()->subDays(2)->format('Y-m-d'))->paginate(50);
-        // } else {
-        //     $search = request()->input('search', '');
-        //     if ($search) {
-        //         $user = User::where('boon_number', $search)->first();
-        //         $orders = Order::whereDate('created_at', now()->today()->format('Y-m-d'))->where('user_id', $user->id)->paginate(50);
-        //     } else {
-        //         $orders = Order::whereDate('created_at', now()->today()->format('Y-m-d'))->paginate(50);
-        //     }
-        // }
         $time = ReservingTime::first();
         return view('orders', [
             'orders' => $orders,
@@ -213,7 +198,7 @@ class AdminController extends Controller
         return redirect()->back();
     }
 
-    public function cancelOrder(Order $order)
+    public function closeOrder(Order $order)
     {
         $order->update([
             'open' => 0

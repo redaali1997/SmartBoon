@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="card">
-    <div class="card-header bg-dark text-light">Dashboard</div>
+    <div class="card-header text-light">Dashboard</div>
 
     <div class="card-body">
         @if (session('status'))

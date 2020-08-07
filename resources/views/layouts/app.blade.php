@@ -26,7 +26,7 @@
 
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow">
+        <nav class="orange navbar navbar-expand-md shadow">
             <div class="container">
                 <a class="navbar-brand text-white" href="{{ url('/') }}">
                     {{ config('app.name', 'SmartBoon') }}
@@ -48,19 +48,19 @@
                                 Users
                             </button>
                             <div class="dropdown-menu" aria-labelledby="triggerId">
-                                <button class="dropdown-item"><a href=" {{ route('admin.students') }}"
+                                <button class="dropdown-item" style="color: white"><a href=" {{ route('admin.students') }}"
                                         class="btn btn-grey">Students</a></button>
-                                <button class=" dropdown-item"><a href="{{ route('admin.moderators') }}"
+                                <button class=" dropdown-item" style="color: white"><a href="{{ route('admin.moderators') }}"
                                         class="btn btn-grey">Moderator</a></button>
                             </div>
                         </div>
-                        <a class="nav-link" href=" {{ route('admin.add-user') }} ">Add User</a>
+                        <a class="nav-link" href=" {{ route('admin.add-user') }} " style="color: white">Add User</a>
                         @endif
                         @if (auth()->user()->isAdmin() or auth()->user()->isModerator())
-                        <a class="nav-link" href=" {{ route('orders.show') }} ">Orders</a>
+                        <a class="nav-link" style="color: white" href=" {{ route('orders.show') }} ">Orders</a>
                         @endif
                         @if (auth()->user()->isStudent())
-                        <a href="/student" class="nav-link" style="color:white">Reserve</a>
+                        <a href="/student" style="color: white" class="nav-link" style="color:white">Reserve</a>
                         @endif
                         @endauth
                     </ul>
@@ -70,7 +70,7 @@
                         <!-- Authentication Links -->
                         @guest
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                            <a class="nav-link" style="color: white" href="{{ route('login') }}">{{ __('Login') }}</a>
                         </li>
                         @if (Route::has('register'))
                         <li class="nav-item">
@@ -79,7 +79,7 @@
                         @endif
                         @else
                         <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                            <a id="navbarDropdown" style="color: white" class="nav-link dropdown-toggle" href="#" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 {{ Auth::user()->name }} <span class="caret"></span>
                             </a>
