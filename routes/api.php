@@ -18,13 +18,13 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::post('login', 'Api\MobilController@login');
+Route::post('login', 'Api\MobileController@login');
 
 Route::middleware('auth:api')->group(function () {
-    Route::get('/user', 'Api\MobilController@userData');
-    Route::post('/create-order', 'Api\MobilController@createOrder');
-    Route::post('/cancel-order', 'Api\MobilController@cancelOrder');
-    Route::post('/order-done', 'Api\MobilController@orderDone');
+    Route::get('/user', 'Api\MobileController@userData');
+    Route::post('/create-order', 'Api\MobileController@createOrder');
+    Route::post('/cancel-order', 'Api\MobileController@cancelOrder');
+    Route::post('/order-done', 'Api\MobileController@orderDone');
 });
 
-Route::get('reserving-time', 'Api\MobilController@reservingTime');
+Route::get('reserving-time', 'Api\MobileController@reservingTime');
