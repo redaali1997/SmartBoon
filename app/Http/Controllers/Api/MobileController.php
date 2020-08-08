@@ -40,12 +40,18 @@ class MobileController extends Controller
     public function createOrder(Request $request)
     {
         if ($request->user()->role === 'student') {
-            $order = new Order;
-            $user = Auth::guard('api')->user();
-            $order->user_id = $user->id;
-            $order->save();
+            if ($request->user()->activated === 1) {
+                $order = new Order;
+                $user = Auth::guard('api')->user();
+                $order->user_id = $user->id;
+                $order->save();
 
-            return response(['message' => 'Order created successfully.']);
+                return response(['message' => 'Order created successfully.']);
+            } else if ($request->user()->activated === 0) {
+                return response(['message' => 'Failed. User must be activated to be able to order.']);
+            } else {
+                response(['message' => 'Failed. Something went wrong. Try again later.']);
+            }
         } else {
             return response(['message' => 'You must be a student to make an order.']);
         }
@@ -77,7 +83,7 @@ class MobileController extends Controller
         } else if ($order && $order->open === 0) {
             return response(['message' => 'Failed. Order already closed.']);
         } else {
-            return response(['message' => 'Failed. Cannot find order.']);
+            return response(['message' => 'Failed. Cannot find such order.']);
         }
     }
 }
